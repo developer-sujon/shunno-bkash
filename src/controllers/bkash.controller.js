@@ -12,11 +12,12 @@ const { bkashService } = require('../services');
  */
 
 const webhookNotification = catchAsync(async (req, res) => {
-  const data = await bkashService.webhookNotification(req.body);
+  const messageType = req.header('x-amz-sns-message-type');
+
+  const data = await bkashService.webhookNotification(messageType, req.body);
   res.json({ status: true, message: 'ok', data });
 });
 
-
 module.exports = {
-  webhookNotification
+  webhookNotification,
 };
